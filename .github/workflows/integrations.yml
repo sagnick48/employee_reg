@@ -1,0 +1,34 @@
+name: Integration Pipeline(CI)
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    env:
+        POSTGRES_PASSWORD: ${{secrets.MONGO_PASSWORD}}
+        POSTGRES_DB: ${{secrets.POSTGRES_DB}}
+        MONGO_USER: ${{secrets.MONGO_USER}}
+        MONGO_PASSWORD: ${{secrets.MONGO_PASSWORD}}
+        PORT: ${{secrets.PORT}}
+        NGINX_CONTAINER_NAME: ${{secrets.NGINX_CONTAINER_NAME}}
+        NGINX_PORT: ${{secrets.NGINX_PORT}}
+        NGINX_PORT_SQL: ${{secrets.NGINX_PORT_SQL}}
+        NGINX_PORT_NOSQL: ${{secrets.NGINX_PORT_NOSQL}}
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.10"
+    - name: Install dependencies
+      run: pip install -r requirements.txt
+    - name: Testing the code 
+      run: pytest

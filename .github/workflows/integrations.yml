@@ -1,9 +1,7 @@
 name: Integration Pipeline(CI)
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    branches: [ "legacy" ]
 
 permissions:
   contents: read

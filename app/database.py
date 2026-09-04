@@ -9,8 +9,8 @@ db_type = "sql"
 password = os.getenv("POSTGRES_PASSWORD")
 postgres_db = os.getenv("POSTGRES_DB")
 
-mongo_user = os.getenv("MONGO_USER")
-mongo_password = os.getenv("MONGO_PASSWORD")
+# mongo_user = os.getenv("MONGO_USER")
+# mongo_password = os.getenv("MONGO_PASSWORD")
 POSTGRES_URL = (
     f"postgresql://postgres:{password}"
     f"@localhost:5432/{postgres_db}"

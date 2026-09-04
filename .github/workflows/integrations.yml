@@ -12,16 +12,24 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: ${{secrets.POSTGRES_PASSWORD}}
+          POSTGRES_DB: ${{secrets.POSTGRES_DB}}
+        ports:
+          - 5432:5432
+      mongodb:
+        image: mongo:latest
+        ports:
+          - 27017:27017
     env:
-        POSTGRES_PASSWORD: ${{secrets.MONGO_PASSWORD}}
+        POSTGRES_PASSWORD: ${{secrets.POSTGRES_PASSWORD}}
         POSTGRES_DB: ${{secrets.POSTGRES_DB}}
-        MONGO_USER: ${{secrets.MONGO_USER}}
-        MONGO_PASSWORD: ${{secrets.MONGO_PASSWORD}}
-        PORT: ${{secrets.PORT}}
-        NGINX_CONTAINER_NAME: ${{secrets.NGINX_CONTAINER_NAME}}
-        NGINX_PORT: ${{secrets.NGINX_PORT}}
-        NGINX_PORT_SQL: ${{secrets.NGINX_PORT_SQL}}
-        NGINX_PORT_NOSQL: ${{secrets.NGINX_PORT_NOSQL}}
+        # MONGO_USER: ${{secrets.MONGO_USER}}
+        # MONGO_PASSWORD: ${{secrets.MONGO_PASSWORD}}
     steps:
     - uses: actions/checkout@v4
     - name: Set up Python 3.10

@@ -9,11 +9,12 @@ db_type = "sql"
 password = os.getenv("POSTGRES_PASSWORD")
 postgres_db = os.getenv("POSTGRES_DB")
 
-# mongo_user = os.getenv("MONGO_USER")
-# mongo_password = os.getenv("MONGO_PASSWORD")
+mongo_user = os.getenv("MONGO_USER")
+mongo_password = os.getenv("MONGO_PASSWORD")
+print(password)
 POSTGRES_URL = (
     f"postgresql://postgres:{password}"
-    f"@localhost:5432/{postgres_db}"
+    f"@sqldb:5432/{postgres_db}"
 )
 
 sql_engine = create_engine(
@@ -27,7 +28,11 @@ SessionLocal = sessionmaker(
 )
 
 Base = declarative_base()
-MONGO_URL = "mongodb://localhost:27017/"
+MONGO_URL = (
+    f"mongodb://{mongo_user}:{mongo_password}"
+    f"@nosqldb:27017/?authSource=admin"
+)
+
 MONGO_DB = "employee"
 
 mongo_client = AsyncIOMotorClient(

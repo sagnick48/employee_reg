@@ -12,31 +12,26 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    services:
-      postgres:
-        image: postgres:16
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: ${{secrets.POSTGRES_PASSWORD}}
-          POSTGRES_DB: ${{secrets.POSTGRES_DB}}
-        ports:
-          - 5432:5432
-      mongodb:
-        image: mongo:latest
-        ports:
-          - 27017:27017
     env:
         POSTGRES_PASSWORD: ${{secrets.POSTGRES_PASSWORD}}
         POSTGRES_DB: ${{secrets.POSTGRES_DB}}
-        # MONGO_USER: ${{secrets.MONGO_USER}}
-        # MONGO_PASSWORD: ${{secrets.MONGO_PASSWORD}}
+        MONGO_USER: ${{secrets.MONGO_USER}}
+        MONGO_PASSWORD: ${{secrets.MONGO_PASSWORD}}
+        NGINX_PORT: ${{secrets.NGINX_PORT}}
     steps:
     - uses: actions/checkout@v4
-    - name: Set up Python 3.10
-      uses: actions/setup-python@v3
-      with:
-        python-version: "3.10"
-    - name: Install dependencies
-      run: pip install -r requirements.txt
-    - name: Testing the code 
-      run: pytest
+    - name: Create the volume db_data
+      run: docker volume create db_data
+    - name: Create the volume nossql_data
+      run: docker volume create nossql_data
+    - name: Create the Network
+      run: docker network create --driver bridge --subnet 185.0.0.0/16 employee_net1
+    - name: Build The Image
+      run: docker compose build
+    - name: Up the containers
+      run:  docker compose up -d
+    - name: check the running contaienrs
+      run: docker compose ps
+    - name: Down the containers
+      run: docker compose down
+    

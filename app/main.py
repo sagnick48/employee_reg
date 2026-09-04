@@ -1,9 +1,9 @@
 import uuid
 from fastapi import FastAPI, HTTPException, status
 from sqlalchemy.orm import Session
-from .database import Base, SessionLocal, employees_collection, get_db_type, set_db_type, sql_engine
-from .models import Employee
-from .schemas import EmployeeCreate, EmployeePatch, EmployeeResponse, EmployeeUpdate
+from database import Base, SessionLocal, employees_collection, get_db_type, set_db_type, sql_engine
+from models import Employee
+from schemas import EmployeeCreate, EmployeePatch, EmployeeResponse, EmployeeUpdate
 app = FastAPI(title="Employee Registration API", version="1.0.0")
 Base.metadata.create_all(bind=sql_engine)
 @app.get("/")

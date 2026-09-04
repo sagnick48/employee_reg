@@ -1,5 +1,5 @@
 from sqlalchemy import Column, String
-from .database import Base
+from database import Base
 class Employee(Base):
     __tablename__ = "employees"
     id = Column(String(100), primary_key=True, nullable=False)

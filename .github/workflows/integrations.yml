@@ -20,6 +20,10 @@ jobs:
         NGINX_PORT: ${{secrets.NGINX_PORT}}
     steps:
     - uses: actions/checkout@v4
+    - name: Start Podman socket
+      run: |
+        systemctl --user enable --now podman.socket
+        podman info
     - name: Create the volume db_data
       run: podman volume create db_data
     - name: Create the volume nossql_data

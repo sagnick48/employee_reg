@@ -21,17 +21,17 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Create the volume db_data
-      run: docker volume create db_data
+      run: podman volume create db_data
     - name: Create the volume nossql_data
-      run: docker volume create nossql_data
+      run: podman volume create nossql_data
     - name: Create the Network
-      run: docker network create --driver bridge --subnet 185.0.0.0/16 employee_net1
+      run: podman network create --driver bridge --subnet 185.0.0.0/16 employee_net1
     - name: Build The Image
-      run: docker compose build
+      run: podman compose build
     - name: Up the containers
-      run:  docker compose up -d
+      run:  podman compose up -d
     - name: check the running contaienrs
-      run: docker compose ps
+      run: podman compose ps
     - name: Down the containers
-      run: docker compose down
+      run: podman compose down
     

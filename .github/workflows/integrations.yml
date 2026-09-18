@@ -10,7 +10,6 @@ permissions:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     env:
         POSTGRES_PASSWORD: ${{secrets.POSTGRES_PASSWORD}}
@@ -20,6 +19,11 @@ jobs:
         NGINX_PORT: ${{secrets.NGINX_PORT}}
     steps:
     - uses: actions/checkout@v4
+    - name: Sonarqube Scan
+      uses: SonarSource/sonarqube-scan-action@v6
+      env:
+        SONAR_TOKEN: ${{secrets.SONAR_TOKEN}}
+        
     - name: Start Podman socket
       run: |
         systemctl --user enable --now podman.socket
@@ -38,4 +42,5 @@ jobs:
       run: podman compose ps
     - name: Down the containers
       run: podman compose down
+  
     

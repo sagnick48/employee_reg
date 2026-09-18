@@ -26,12 +26,10 @@ jobs:
         SONAR_TOKEN: ${{secrets.SONAR_TOKEN}}
         SONAR_HOST_URL: ${{secrets.SONAR_HOST_URL}}
 
-    # - name: Start Podman socket
-    #   run: |
-    #     systemctl --user enable --now podman.socket
-    #     podman info
-    - name: Check Podman
-      run: podman info
+    - name: Start Podman socket
+      run: |
+        systemctl --user enable --now podman.socket
+        podman info
     - name: Create the volume db_data
       run: podman volume create db_data --ignore
     - name: Create the volume nossql_data

@@ -10,7 +10,8 @@ permissions:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    # runs-on: ubuntu-latest
+    runs-on: [self-hosted,linux,wsl1]
     env:
         POSTGRES_PASSWORD: ${{secrets.POSTGRES_PASSWORD}}
         POSTGRES_DB: ${{secrets.POSTGRES_DB}}
@@ -23,7 +24,8 @@ jobs:
       uses: SonarSource/sonarqube-scan-action@v6
       env:
         SONAR_TOKEN: ${{secrets.SONAR_TOKEN}}
-        
+        SONAR_HOST_URL: ${{secrets.SONAR_TOKEN}}
+
     - name: Start Podman socket
       run: |
         systemctl --user enable --now podman.socket

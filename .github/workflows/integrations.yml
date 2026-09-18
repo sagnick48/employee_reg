@@ -33,11 +33,11 @@ jobs:
     - name: Check Podman
       run: podman info
     - name: Create the volume db_data
-      run: podman volume create db_data
+      run: podman volume create db_data --ignore
     - name: Create the volume nossql_data
-      run: podman volume create nossql_data
+      run: podman volume create nossql_data --ignore
     - name: Create the Network
-      run: podman network create --driver bridge --subnet 185.0.0.0/16 employee_net1
+      run: podman network create --driver bridge --subnet 185.0.0.0/16 employee_net1 --ignore 
     - name: Build The Image
       run: podman compose build
     - name: Up the containers
